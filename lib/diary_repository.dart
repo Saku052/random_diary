@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:random_diary/item_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DiaryRepository {
   static const String _baseUrl = 'https://api.notion.com/v1/';
@@ -17,13 +18,15 @@ class DiaryRepository {
 
   Future<List<Item>> getItems() async {
     try {
-      final url =
-          '${_baseUrl}databases/${dotenv.env['NOTION_DATABASE_ID']}/query';
+      final storage = FlutterSecureStorage();
+      final apiKey = await storage.read(key: 'api_key');
+      final databaseId = await storage.read(key: 'database_id');
+
+      final url = '${_baseUrl}databases/${databaseId}/query';
       final response = await _client.post(
         Uri.parse(url),
         headers: {
-          HttpHeaders.authorizationHeader:
-              'Bearer ${dotenv.env['NOTION_API_KEY']}',
+          HttpHeaders.authorizationHeader: 'Bearer ${apiKey}',
           'Notion-Version': '2022-06-28',
         },
       );

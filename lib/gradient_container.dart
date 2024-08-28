@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:random_diary/item_model.dart';
 import 'package:random_diary/diary_repository.dart';
+import 'package:random_diary/api_key_textfield.dart';
 import 'dart:math';
 
 class GradientContainer extends StatefulWidget {
@@ -23,6 +22,12 @@ class _GradientContainerState extends State<GradientContainer> {
   void initState() {
     super.initState();
     _items = DiaryRepository().getItems();
+  }
+
+  void getItems(Future<List<Item>> items) {
+    setState(() {
+      _items = items;
+    });
   }
 
   int getRandomNumber(int? listLength) {
@@ -63,6 +68,8 @@ class _GradientContainerState extends State<GradientContainer> {
               },
             ),
           ),
+          const SizedBox(height: 32),
+          ApiKeyTextField(onGetItems: getItems),
         ],
       ),
     ));
