@@ -61,7 +61,8 @@ class _GradientContainerState extends State<GradientContainer> {
                     style: const TextStyle(color: _textColor),
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
+                  return Text(snapshot.error.toString(),
+                      style: const TextStyle(color: _textColor));
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

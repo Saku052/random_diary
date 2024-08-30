@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:random_diary/item_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -16,11 +15,22 @@ class DiaryRepository {
     _client.close();
   }
 
+  void clearSecureStorage() async {
+    final storage = FlutterSecureStorage();
+    await storage.deleteAll();
+  }
+
   Future<List<Item>> getItems() async {
     try {
       final storage = FlutterSecureStorage();
       final apiKey = await storage.read(key: 'api_key');
       final databaseId = await storage.read(key: 'database_id');
+
+      if (apiKey == null) {
+        throw ApiKeyNotFoundException('API key not found');
+      } else if (databaseId == null) {
+        throw DatabaseIdNotFoundException('Database ID not found');
+      }
 
       final url = '${_baseUrl}databases/${databaseId}/query';
       final response = await _client.post(
@@ -46,10 +56,40 @@ class DiaryRepository {
                 ))
             .toList();
       } else {
-        throw Exception('Failed to load items');
+        throw IncorrectApiKeyException('Incorrect API key');
       }
-    } catch (e) {
-      throw Exception('Failed to load items: $e');
+    } on ApiKeyNotFoundException {
+      throw Exception('Please add API key');
+    } on DatabaseIdNotFoundException {
+      throw Exception('Please add Database ID');
+    } on IncorrectApiKeyException {
+      throw Exception('Incorrect API key');
+    } on Exception {
+      rethrow;
     }
   }
+}
+
+class ApiKeyNotFoundException implements Exception {
+  final String message;
+  ApiKeyNotFoundException(this.message);
+
+  @override
+  String toString() => 'ApiKeyNotFoundException: $message';
+}
+
+class DatabaseIdNotFoundException implements Exception {
+  final String message;
+  DatabaseIdNotFoundException(this.message);
+
+  @override
+  String toString() => 'DatabaseIdNotFoundException: $message';
+}
+
+class IncorrectApiKeyException implements Exception {
+  final String message;
+  IncorrectApiKeyException(this.message);
+
+  @override
+  String toString() => 'IncorrectApiKeyException: $message';
 }
