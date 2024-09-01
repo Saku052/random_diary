@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:random_diary/item_model.dart';
 import 'package:random_diary/diary_repository.dart';
 import 'package:random_diary/api_key_textfield.dart';
+import 'package:random_diary/property_textfield.dart';
 import 'dart:math';
 
 class GradientContainer extends StatefulWidget {
@@ -71,6 +72,11 @@ class _GradientContainerState extends State<GradientContainer> {
           ),
           const SizedBox(height: 32),
           ApiKeyTextField(onGetItems: getItems),
+          const SizedBox(height: 32),
+          const Text('Add your property name here',
+              style: TextStyle(color: _textColor)),
+          const SizedBox(height: 16),
+          PropertyTextfield(onGetItems: getItems),
         ],
       ),
     ));

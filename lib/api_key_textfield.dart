@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:random_diary/diary_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:random_diary/diary_repository.dart';
 import 'package:random_diary/item_model.dart';
 
 class ApiKeyTextField extends StatelessWidget {
@@ -27,38 +27,39 @@ class ApiKeyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            TextField(
-              controller: _apiController,
-              decoration: InputDecoration(
-                labelText: apiLabel,
-                hintText: hintapi,
-              ),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          TextField(
+            controller: _apiController,
+            decoration: InputDecoration(
+              labelText: apiLabel,
+              hintText: hintapi,
             ),
-            TextField(
-              controller: _idController,
-              decoration: InputDecoration(
-                labelText: idLabel,
-                hintText: hintapi,
-              ),
+          ),
+          TextField(
+            controller: _idController,
+            decoration: InputDecoration(
+              labelText: idLabel,
+              hintText: hintapi,
             ),
-            TextButton(
-              onPressed: getitems,
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-              ),
-              child: const Text(
-                'load your diary',
-                style: TextStyle(color: _textColor),
-              ),
+          ),
+          TextButton(
+            onPressed: getitems,
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(16),
             ),
-          ],
-        ));
+            child: const Text(
+              'load your diary',
+              style: TextStyle(color: _textColor),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

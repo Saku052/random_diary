@@ -25,11 +25,17 @@ class DiaryRepository {
       final storage = FlutterSecureStorage();
       final apiKey = await storage.read(key: 'api_key');
       final databaseId = await storage.read(key: 'database_id');
+      final nameProp = await storage.read(key: 'name_prop');
+      final dateProp = await storage.read(key: 'date_prop');
 
       if (apiKey == null) {
         throw ApiKeyNotFoundException('API key not found');
       } else if (databaseId == null) {
         throw DatabaseIdNotFoundException('Database ID not found');
+      } else if (nameProp == null) {
+        throw namePropNotFoundException('name property not found');
+      } else if (dateProp == null) {
+        throw datePropNotFoundException('date property not found');
       }
 
       final url = '${_baseUrl}databases/${databaseId}/query';
@@ -48,9 +54,9 @@ class DiaryRepository {
                   name:
                       e['properties']['名前']?['title']?[0]?['plain_text'] ?? '?',
                   tag: e['properties']['タグ']?['select']?['name'] ?? 'Any',
-                  date:
-                      DateTime.parse(e['properties']['日付']?['date']?['start']),
-                  description: e['properties']['AI 要約']?['rich_text']?[0]
+                  date: DateTime.parse(
+                      e['properties'][dateProp]?['date']?['start']),
+                  description: e['properties'][nameProp]?['rich_text']?[0]
                           ?['plain_text'] ??
                       'idk',
                 ))
@@ -84,6 +90,22 @@ class DatabaseIdNotFoundException implements Exception {
 
   @override
   String toString() => 'DatabaseIdNotFoundException: $message';
+}
+
+class namePropNotFoundException implements Exception {
+  final String message;
+  namePropNotFoundException(this.message);
+
+  @override
+  String toString() => 'namePropNotFoundException: $message';
+}
+
+class datePropNotFoundException implements Exception {
+  final String message;
+  datePropNotFoundException(this.message);
+
+  @override
+  String toString() => 'datePropNotFoundException: $message';
 }
 
 class IncorrectApiKeyException implements Exception {
