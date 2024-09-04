@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:random_diary/item_model.dart';
-import 'package:random_diary/diary_repository.dart';
-import 'package:random_diary/api_key_textfield.dart';
-import 'package:random_diary/property_textfield.dart';
+import 'package:random_diary/diary_ver1/item_model.dart';
+import 'package:random_diary/diary_ver1/diary_repository.dart';
+import 'package:random_diary/diary_ver1/api_key_textfield.dart';
+import 'package:random_diary/diary_ver1/property_textfield.dart';
 import 'dart:math';
 
 class GradientContainer extends StatefulWidget {

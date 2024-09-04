@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:random_diary/item_model.dart';
+import 'package:random_diary/diary_ver1/item_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DiaryRepository {
