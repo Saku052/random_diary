@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:random_diary/views/diary_page.dart';
 import 'package:random_diary/views/setting_page.dart';
 
-const Color _backgroundColor = Color(0xFF453748);
+const Color _backgroundColor = Color.fromARGB(255, 225, 151, 241);
 
 class DiaryFramework extends StatefulWidget {
   const DiaryFramework({super.key});
@@ -12,6 +12,18 @@ class DiaryFramework extends StatefulWidget {
 }
 
 class _DiaryFrameworkState extends State<DiaryFramework> {
+  Widget currentPage = const DiaryPage();
+
+  void changeePage() {
+    setState(() {
+      if (currentPage is DiaryPage) {
+        currentPage = const SettingPage();
+      } else {
+        currentPage = const DiaryPage();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +34,7 @@ class _DiaryFrameworkState extends State<DiaryFramework> {
       color: _backgroundColor,
 
       // container child
-      child: const SettingPage(),
+      child: currentPage,
     ));
   }
 }

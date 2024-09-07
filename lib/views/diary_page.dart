@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:random_diary/widgets/top_banner.dart';
 
 const TextStyle _textStyle = TextStyle(
     color: Color(0xFFE3DFC8),
@@ -18,7 +19,7 @@ class _DiaryPageState extends State<DiaryPage> {
   Widget build(BuildContext context) {
     return const Column(
       children: <Widget>[
-        Text('Diary Page', style: _textStyle),
+        TopBanner(),
         Text('This is the diary page', style: _textStyle),
         Text('This is the bottom of the diary page', style: _textStyle),
       ],
