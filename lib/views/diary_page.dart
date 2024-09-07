@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:random_diary/widgets/top_banner.dart';
-
-const TextStyle _textStyle = TextStyle(
-    color: Color(0xFFE3DFC8),
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Roboto');
+import 'package:random_diary/widgets/text_box.dart';
 
 class DiaryPage extends StatefulWidget {
-  const DiaryPage({super.key});
+  const DiaryPage(this.changePage, {super.key});
+  final void Function() changePage;
 
   @override
   State<DiaryPage> createState() => _DiaryPageState();
@@ -17,11 +13,15 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: <Widget>[
-        TopBanner(),
-        Text('This is the diary page', style: _textStyle),
-        Text('This is the bottom of the diary page', style: _textStyle),
+        TopBanner(widget.changePage),
+        const TextBox(),
+        const SizedBox(height: 30),
+        GestureDetector(
+          onTap: () {},
+          child: const Icon(Icons.redo, color: textColor, size: 100),
+        ),
       ],
     );
   }
