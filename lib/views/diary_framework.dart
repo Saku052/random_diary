@@ -16,14 +16,22 @@ class _DiaryFrameworkState extends State<DiaryFramework> {
 
   @override
   void initState() {
-    currentPage = DiaryPage(changePage);
+    currentPage = DiaryPage(changeToSetting);
     super.initState();
   }
 
-  void changePage() {
+  void changeToSetting() {
     setState(() {
       if (currentPage is DiaryPage) {
-        currentPage = const SettingPage();
+        currentPage = SettingPage(changeToDiary);
+      }
+    });
+  }
+
+  void changeToDiary() {
+    setState(() {
+      if (currentPage is SettingPage) {
+        currentPage = DiaryPage(changeToSetting);
       }
     });
   }
