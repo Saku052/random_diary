@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox({super.key});
+
+  Future<String?> testText() async {
+    const FlutterSecureStorage storage = FlutterSecureStorage();
+    return await storage.read(key: 'api') ?? 'No API';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class TextBox extends StatelessWidget {
             color: const Color(0xFFBC6C25),
           ),
         ),
-        const Text('This is something is somethingsomething',
+        const Text('This is the bottom of the setting page',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color(0xFFFEFAE0),
