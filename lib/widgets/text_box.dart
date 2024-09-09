@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+const TextStyle _textStyle = TextStyle(
+    color: Color(0xFFFEFAE0),
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Roboto');
+
 class TextBox extends StatelessWidget {
-  const TextBox({super.key});
+  const TextBox(this.itemName, {super.key});
+  final String itemName;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +24,10 @@ class TextBox extends StatelessWidget {
             color: const Color(0xFFBC6C25),
           ),
         ),
-        const Text('This is the bottom of the setting page',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Color(0xFFFEFAE0),
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto')),
+        Text(
+          itemName,
+          style: _textStyle,
+        ),
       ],
     );
   }
