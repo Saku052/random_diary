@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox({super.key});
-
-  Future<String?> testText() async {
-    const FlutterSecureStorage storage = FlutterSecureStorage();
-    return await storage.read(key: 'api') ?? 'No API';
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
 class Diary {
-  final String name;
+  final DateTime date;
   final String description;
 
   const Diary({
-    required this.name,
+    required this.date,
     required this.description,
   });
 }
