@@ -45,7 +45,7 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget settingsMain() {
     if (_isApi) {
-      return SettingsTextfield(saveapi, changeInputState, 'api', 'des');
+      return SettingsTextfield(saveapi, changeInputState, 'api', 'database ID');
     } else {
       return SettingsTextfield(
           saveProperties, changeInputState, 'name', 'date');
@@ -58,7 +58,6 @@ class _SettingPageState extends State<SettingPage> {
       children: <Widget>[
         SettingsBanner(widget.changePage),
         settingsMain(),
-        const Text('This is the bottom of the setting page', style: _textStyle),
       ],
     );
   }

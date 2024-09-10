@@ -16,6 +16,7 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   late Future<List<Diary>> _items;
   final RequestDiary requestDiary = RequestDiary();
+  int listNum = 0;
 
   int getNum(int? listLength) {
     final random = Random();
@@ -46,14 +47,18 @@ class _DiaryPageState extends State<DiaryPage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        TopBanner(widget.changePage),
         FutureBuilder<List<Diary>>(
           future: _items,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               disposehttp;
-              return TextBox(
-                  snapshot.data![getNum(snapshot.data!.length)].description);
+              listNum = getNum(snapshot.data!.length);
+              return Column(
+                children: [
+                  TopBanner(widget.changePage, snapshot.data![listNum].date),
+                  TextBox(snapshot.data![listNum].description),
+                ],
+              );
             } else if (snapshot.hasError) {
               return TextBox(snapshot.error.toString());
             } else {

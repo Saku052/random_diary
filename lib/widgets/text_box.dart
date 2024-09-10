@@ -24,9 +24,12 @@ class TextBox extends StatelessWidget {
             color: const Color(0xFFBC6C25),
           ),
         ),
-        Text(
-          itemName,
-          style: _textStyle,
+        Padding(
+          padding: const EdgeInsets.all(32),
+          child: Text(
+            itemName,
+            style: _textStyle,
+          ),
         ),
       ],
     );

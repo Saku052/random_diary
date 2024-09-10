@@ -13,8 +13,12 @@ class SettingsTextfield extends StatelessWidget {
   final TextEditingController apiController = TextEditingController();
   final TextEditingController desController = TextEditingController();
 
-  InputDecoration fieldDecoration(String label) =>
-      InputDecoration(border: const OutlineInputBorder(), labelText: label);
+  InputDecoration fieldDecoration(String label) => InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Color(0xFFFEFAE0)),
+        fillColor: const Color(0xFFDDA15E), // Set background color
+        filled: true,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +40,8 @@ class SettingsTextfield extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: () => setApi(apiController.text, desController.text),
             style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.green,
-              backgroundColor: Colors.green[100],
+              foregroundColor: const Color(0xFFFEFAE0),
+              backgroundColor: const Color(0xFF606C38),
             ),
             icon: const Icon(Icons.save),
             label: const Text('Save'),
@@ -45,8 +49,8 @@ class SettingsTextfield extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: changeInputState,
             style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.red,
-              backgroundColor: Colors.red[100],
+              foregroundColor: const Color(0xFFFEFAE0),
+              backgroundColor: const Color(0xFFBC6C25),
             ),
             icon: const Icon(Icons.input),
             label: const Text('Input Properties'),
