@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:random_diary/widgets/properties_dropdown.dart';
 import 'package:random_diary/widgets/settings_banner.dart';
 import 'package:random_diary/widgets/settings_textfield.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -58,6 +59,7 @@ class _SettingPageState extends State<SettingPage> {
       children: <Widget>[
         SettingsBanner(widget.changePage),
         settingsMain(),
+        const PropertiesDropdown(),
       ],
     );
   }

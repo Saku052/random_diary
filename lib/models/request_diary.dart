@@ -25,13 +25,56 @@ class RequestDiary {
     await storage.deleteAll();
   }
 
+  Future<List<NameType>> getProperties() async {
+    try {
+      final storage = FlutterSecureStorage();
+      final apiKey = await storage.read(key: 'api');
+      final databaseId = await storage.read(key: 'des');
+
+      List<NameType> properties = [];
+
+      if (apiKey == null) {
+        throw ApiKeyNotFoundException('API key not found');
+      } else if (databaseId == null) {
+        throw DatabaseIdNotFoundException('Database ID not found');
+      }
+
+      final url = '${_baseUrl}databases/$databaseId/query';
+      final response = await _client.post(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $apiKey',
+          'Notion-Version': '2022-06-28',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final prop = data['results'][0]['properties'];
+
+        // Loop through properties to get name and type
+        prop.forEach((name, details) {
+          String type = details['type'];
+          properties.add(NameType(name: name, type: type));
+          print('Property Name: $name, Type: $type');
+        });
+
+        return properties;
+      } else {
+        throw IncorrectApiKeyException('Incorrect API key');
+      }
+    } catch (e) {
+      throw Exception('Please add API key and Database ID');
+    }
+  }
+
   Future<List<Diary>> getDiary() async {
     try {
       final storage = FlutterSecureStorage();
-      final apiKey = await storage.read(key: 'api_key');
-      final databaseId = await storage.read(key: 'database_id');
-      final nameProp = await storage.read(key: 'name_prop');
-      final dateProp = await storage.read(key: 'date_prop');
+      final apiKey = await storage.read(key: 'api');
+      final databaseId = await storage.read(key: 'des');
+      final nameProp = await storage.read(key: 'name');
+      final dateProp = await storage.read(key: 'date');
 
       if (apiKey == null) {
         throw ApiKeyNotFoundException('API key not found');
@@ -54,6 +97,7 @@ class RequestDiary {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+
         return (data['results'] as List)
             .map((e) => diaryEncoder(e, dateProp, nameProp))
             .toList();

@@ -10,6 +10,9 @@ class TextBox extends StatelessWidget {
   const TextBox(this.itemName, {super.key});
   final String itemName;
 
+  static const String demoText =
+      'Woke up tired but took a walk to boost energy. Productive brainstorming at work, caught up with a friend over lunch, worked on personal projects. Felt a bit overwhelmed by tasks.';
+
   @override
   Widget build(BuildContext context) {
     return Stack(

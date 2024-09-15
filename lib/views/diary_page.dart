@@ -60,7 +60,12 @@ class _DiaryPageState extends State<DiaryPage> {
                 ],
               );
             } else if (snapshot.hasError) {
-              return TextBox(snapshot.error.toString());
+              return Column(
+                children: [
+                  TopBanner(widget.changePage, DateTime.now()),
+                  TextBox(snapshot.error.toString()),
+                ],
+              );
             } else {
               return const Center(child: CircularProgressIndicator());
             }

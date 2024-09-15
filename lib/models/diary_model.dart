@@ -7,3 +7,13 @@ class Diary {
     required this.description,
   });
 }
+
+class NameType {
+  final String name;
+  final String type;
+
+  const NameType({
+    required this.name,
+    required this.type,
+  });
+}
