@@ -14,7 +14,7 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
   late Future<List<NameType>> _items;
   final RequestDiary requestDiary = RequestDiary();
   int listNum = 0;
-  var _selectProperty;
+  NameType? _selectProperty;
 
   @override
   void initState() {
@@ -41,18 +41,18 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               disposehttp;
-              return DropdownButton<String>(
+              return DropdownButton<NameType>(
                 hint: const Text('Select a property'),
                 value: _selectProperty,
-                onChanged: (String? newValue) {
+                onChanged: (NameType? newValue) {
                   setState(() {
                     _selectProperty = newValue!;
-                    print('Selected: $_selectProperty');
+                    print('Selected: ${_selectProperty!.name}');
                   });
                 },
                 items: snapshot.data!.map((NameType value) {
-                  return DropdownMenuItem<String>(
-                    value: value.name,
+                  return DropdownMenuItem<NameType>(
+                    value: value,
                     child: Text(value.name),
                   );
                 }).toList(),
