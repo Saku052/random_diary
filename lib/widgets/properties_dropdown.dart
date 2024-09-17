@@ -3,18 +3,34 @@ import 'package:random_diary/models/diary_model.dart';
 import 'package:random_diary/models/request_diary.dart';
 
 class PropertiesDropdown extends StatefulWidget {
-  const PropertiesDropdown({super.key});
+  const PropertiesDropdown(this.setProperty, {super.key});
+  final void Function(String, String, String, String) setProperty;
 
   @override
   State<PropertiesDropdown> createState() => _PropertiesDropdownState();
 }
 
 class _PropertiesDropdownState extends State<PropertiesDropdown> {
-  String? dropdownValue;
-  late Future<List<NameType>> _items;
   final RequestDiary requestDiary = RequestDiary();
-  int listNum = 0;
+  late Future<List<NameType>> _items;
+
   NameType? _selectProperty;
+  String? dropdownValue;
+  int listNum = 0;
+
+  void selectName(NameType? newValue) {
+    setState(() {
+      _selectProperty = newValue!;
+      print('Selected: ${_selectProperty!.name}');
+    });
+  }
+
+  DropdownMenuItem<NameType> dropDisplay(NameType value) {
+    return DropdownMenuItem<NameType>(
+      value: value,
+      child: Text(value.name),
+    );
+  }
 
   @override
   void initState() {
@@ -44,18 +60,8 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
               return DropdownButton<NameType>(
                 hint: const Text('Select a property'),
                 value: _selectProperty,
-                onChanged: (NameType? newValue) {
-                  setState(() {
-                    _selectProperty = newValue!;
-                    print('Selected: ${_selectProperty!.name}');
-                  });
-                },
-                items: snapshot.data!.map((NameType value) {
-                  return DropdownMenuItem<NameType>(
-                    value: value,
-                    child: Text(value.name),
-                  );
-                }).toList(),
+                onChanged: selectName,
+                items: snapshot.data!.map(dropDisplay).toList(),
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
