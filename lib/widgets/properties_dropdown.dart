@@ -14,14 +14,22 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
   final RequestDiary requestDiary = RequestDiary();
   late Future<List<NameType>> _items;
 
-  NameType? _selectProperty;
+  NameType? _selectDate;
+  NameType? _selectDescription;
   String? dropdownValue;
   int listNum = 0;
 
-  void selectName(NameType? newValue) {
+  void selectDate(NameType? newValue) {
     setState(() {
-      _selectProperty = newValue!;
-      print('Selected: ${_selectProperty!.name}');
+      _selectDate = newValue!;
+      print('Selected: ${_selectDate!.name}');
+    });
+  }
+
+  void selectDescription(NameType? newValue) {
+    setState(() {
+      _selectDescription = newValue!;
+      print('Selected: ${_selectDescription!.name}');
     });
   }
 
@@ -50,17 +58,18 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: <Widget>[
+        const Spacer(),
         FutureBuilder<List<NameType>>(
           future: _items,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               disposehttp;
               return DropdownButton<NameType>(
-                hint: const Text('Select a property'),
-                value: _selectProperty,
-                onChanged: selectName,
+                hint: const Text('description'),
+                value: _selectDescription,
+                onChanged: selectDescription,
                 items: snapshot.data!.map(dropDisplay).toList(),
               );
             } else if (snapshot.hasError) {
@@ -70,6 +79,26 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
             }
           },
         ),
+        const Spacer(),
+        FutureBuilder<List<NameType>>(
+          future: _items,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              disposehttp;
+              return DropdownButton<NameType>(
+                hint: const Text('date'),
+                value: _selectDate,
+                onChanged: selectDate,
+                items: snapshot.data!.map(dropDisplay).toList(),
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        const Spacer(),
       ],
     );
   }
