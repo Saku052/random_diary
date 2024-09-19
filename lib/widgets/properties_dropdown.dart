@@ -3,8 +3,9 @@ import 'package:random_diary/models/diary_model.dart';
 import 'package:random_diary/models/request_diary.dart';
 
 class PropertiesDropdown extends StatefulWidget {
-  const PropertiesDropdown(this.setProperty, {super.key});
-  final void Function(String, String, String, String) setProperty;
+  const PropertiesDropdown(this.setDate, this.setDescription, {super.key});
+  final void Function(String, String) setDate;
+  final void Function(String, String) setDescription;
 
   @override
   State<PropertiesDropdown> createState() => _PropertiesDropdownState();
@@ -20,17 +21,13 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
   int listNum = 0;
 
   void selectDate(NameType? newValue) {
-    setState(() {
-      _selectDate = newValue!;
-      print('Selected: ${_selectDate!.name}');
-    });
+    _selectDate = newValue!;
+    widget.setDate(_selectDate!.name, _selectDate!.type);
   }
 
   void selectDescription(NameType? newValue) {
-    setState(() {
-      _selectDescription = newValue!;
-      print('Selected: ${_selectDescription!.name}');
-    });
+    _selectDescription = newValue!;
+    widget.setDescription(_selectDescription!.name, _selectDescription!.type);
   }
 
   DropdownMenuItem<NameType> dropDisplay(NameType value) {

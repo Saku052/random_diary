@@ -4,7 +4,7 @@ class SettingsTextfield extends StatelessWidget {
   SettingsTextfield(
       this.setApi, this.changeInputState, this.input1, this.input2,
       {super.key});
-  final void Function(String, String, String, String) setApi;
+  final void Function(String, String) setApi;
   final void Function() changeInputState;
 
   final String input1;
@@ -38,8 +38,7 @@ class SettingsTextfield extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           OutlinedButton.icon(
-            onPressed: () =>
-                setApi(apiController.text, desController.text, '', ''),
+            onPressed: () => setApi(apiController.text, desController.text),
             style: OutlinedButton.styleFrom(
               foregroundColor: const Color(0xFFFEFAE0),
               backgroundColor: const Color(0xFF606C38),

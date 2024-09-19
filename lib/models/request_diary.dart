@@ -73,7 +73,7 @@ class RequestDiary {
       final storage = FlutterSecureStorage();
       final apiKey = await storage.read(key: 'api');
       final databaseId = await storage.read(key: 'des');
-      final nameProp = await storage.read(key: 'name');
+      final nameProp = await storage.read(key: 'description');
       final dateProp = await storage.read(key: 'date');
 
       if (apiKey == null) {

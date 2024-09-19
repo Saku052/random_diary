@@ -22,7 +22,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   bool _isApi = true;
 
-  void saveapi(String api, String des, String _, String __) {
+  void saveapi(String api, String des) {
     setState(() {
       const FlutterSecureStorage storage = FlutterSecureStorage();
       storage.write(key: 'api', value: api);
@@ -30,14 +30,19 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
-  void saveProperties(
-      String name, String date, String nameType, String dateType) {
+  void saveDate(String date, String dateType) {
     setState(() {
       const FlutterSecureStorage storage = FlutterSecureStorage();
-      storage.write(key: 'name', value: name);
       storage.write(key: 'date', value: date);
-      storage.write(key: 'nameType', value: nameType);
       storage.write(key: 'dateType', value: dateType);
+    });
+  }
+
+  void saveDescription(String description, String descriptionType) {
+    setState(() {
+      const FlutterSecureStorage storage = FlutterSecureStorage();
+      storage.write(key: 'description', value: description);
+      storage.write(key: 'descriptionType', value: descriptionType);
     });
   }
 
@@ -51,8 +56,7 @@ class _SettingPageState extends State<SettingPage> {
     if (_isApi) {
       return SettingsTextfield(saveapi, changeInputState, 'api', 'database ID');
     } else {
-      return SettingsTextfield(
-          saveProperties, changeInputState, 'name', 'date');
+      return SettingsTextfield(saveapi, changeInputState, 'name', 'date');
     }
   }
 
@@ -62,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
       children: <Widget>[
         SettingsBanner(widget.changePage),
         settingsMain(),
-        PropertiesDropdown(saveProperties),
+        PropertiesDropdown(saveDate, saveDescription),
       ],
     );
   }
