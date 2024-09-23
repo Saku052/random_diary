@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:random_diary/models/diary_model.dart';
 import 'package:random_diary/models/exception_model.dart';
+import 'package:random_diary/models/diary_encoder.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,11 +11,6 @@ class RequestDiary {
   final http.Client _client;
 
   RequestDiary({http.Client? client}) : _client = client ?? http.Client();
-  Diary diaryEncoder(e, date, des) => Diary(
-        date: DateTime.parse(e['properties'][date]?['date']?['start']),
-        description:
-            e['properties'][des]?['rich_text']?[0]?['plain_text'] ?? 'idk',
-      );
 
   void dispose() {
     _client.close();
@@ -75,6 +71,8 @@ class RequestDiary {
       final databaseId = await storage.read(key: 'des');
       final nameProp = await storage.read(key: 'description');
       final dateProp = await storage.read(key: 'date');
+      final descriptionType = await storage.read(key: 'descriptionType');
+      final dateType = await storage.read(key: 'dateType');
 
       if (apiKey == null) {
         throw ApiKeyNotFoundException('API key not found');
@@ -99,7 +97,8 @@ class RequestDiary {
         final data = jsonDecode(response.body);
 
         return (data['results'] as List)
-            .map((e) => diaryEncoder(e, dateProp, nameProp))
+            .map((e) => DiaryEncoder.diaryEncoder(
+                e, dateProp, nameProp, descriptionType ?? '', dateType ?? ''))
             .toList();
       } else {
         throw IncorrectApiKeyException('Incorrect API key');

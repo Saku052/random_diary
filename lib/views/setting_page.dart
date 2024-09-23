@@ -20,8 +20,6 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool _isApi = true;
-
   void saveapi(String api, String des) {
     setState(() {
       const FlutterSecureStorage storage = FlutterSecureStorage();
@@ -46,26 +44,12 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
-  void changeInputState() {
-    setState(() {
-      _isApi = !_isApi;
-    });
-  }
-
-  Widget settingsMain() {
-    if (_isApi) {
-      return SettingsTextfield(saveapi, changeInputState, 'api', 'database ID');
-    } else {
-      return SettingsTextfield(saveapi, changeInputState, 'name', 'date');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         SettingsBanner(widget.changePage),
-        settingsMain(),
+        SettingsTextfield(saveapi, 'api', 'database ID'),
         PropertiesDropdown(saveDate, saveDescription),
       ],
     );

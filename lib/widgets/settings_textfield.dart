@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SettingsTextfield extends StatelessWidget {
-  SettingsTextfield(
-      this.setApi, this.changeInputState, this.input1, this.input2,
-      {super.key});
+  SettingsTextfield(this.setApi, this.input1, this.input2, {super.key});
   final void Function(String, String) setApi;
-  final void Function() changeInputState;
 
   final String input1;
   final String input2;
@@ -45,15 +42,6 @@ class SettingsTextfield extends StatelessWidget {
             ),
             icon: const Icon(Icons.save),
             label: const Text('Save'),
-          ),
-          OutlinedButton.icon(
-            onPressed: changeInputState,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFFFEFAE0),
-              backgroundColor: const Color(0xFFBC6C25),
-            ),
-            icon: const Icon(Icons.input),
-            label: const Text('Input Properties'),
           ),
         ],
       ),

@@ -37,6 +37,13 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
     );
   }
 
+  BoxDecoration dropDecoration() {
+    return BoxDecoration(
+      color: const Color(0xFFDDA15E),
+      borderRadius: BorderRadius.circular(8),
+    );
+  }
+
   @override
   void initState() {
     setState(() {
@@ -58,42 +65,64 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
     return Row(
       children: <Widget>[
         const Spacer(),
-        FutureBuilder<List<NameType>>(
-          future: _items,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              disposehttp;
-              return DropdownButton<NameType>(
-                hint: const Text('description'),
-                value: _selectDescription,
-                onChanged: selectDescription,
-                items: snapshot.data!.map(dropDisplay).toList(),
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+        Container(
+          decoration: dropDecoration(),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: FutureBuilder<List<NameType>>(
+            future: _items,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                disposehttp;
+                return DropdownButton<NameType>(
+                  hint: const Text('diary',
+                      style: TextStyle(color: Colors.white)),
+                  value: _selectDescription,
+                  onChanged: selectDescription,
+                  items: snapshot.data!.map(dropDisplay).toList(),
+                  underline: Container(), // Remove the default underline
+                  icon: const Icon(Icons.arrow_drop_down,
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                  dropdownColor: const Color(0xFFDDA15E),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
         const Spacer(),
-        FutureBuilder<List<NameType>>(
-          future: _items,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              disposehttp;
-              return DropdownButton<NameType>(
-                hint: const Text('date'),
-                value: _selectDate,
-                onChanged: selectDate,
-                items: snapshot.data!.map(dropDisplay).toList(),
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+        Container(
+          decoration: dropDecoration(),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: FutureBuilder<List<NameType>>(
+            future: _items,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                disposehttp;
+                return DropdownButton<NameType>(
+                  hint:
+                      const Text('date', style: TextStyle(color: Colors.white)),
+                  value: _selectDate,
+                  onChanged: selectDate,
+                  items: snapshot.data!.map(dropDisplay).toList(),
+                  underline: Container(), // Remove the default underline
+                  icon: const Icon(Icons.arrow_drop_down,
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                  dropdownColor: const Color(0xFFDDA15E),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
         const Spacer(),
       ],
