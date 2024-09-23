@@ -60,69 +60,51 @@ class _PropertiesDropdownState extends State<PropertiesDropdown> {
     requestDiary.dispose();
   }
 
+  Widget dropDown(
+      String hint, NameType? value, void Function(NameType?) onChanged) {
+    return Container(
+      decoration: dropDecoration(),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: FutureBuilder<List<NameType>>(
+        future: _items,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return DropdownButton<NameType>(
+              hint: Text(hint, style: const TextStyle(color: Colors.white)),
+              value: value,
+              onChanged: onChanged,
+              items: snapshot.data!.map(dropDisplay).toList(),
+              underline: Container(), // Remove the default underline
+              icon: const Icon(Icons.arrow_drop_down,
+                  color: Color.fromARGB(255, 255, 255, 255)),
+              dropdownColor: const Color(0xFFDDA15E),
+              style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+            );
+          } else if (snapshot.hasError) {
+            return const Text('Input Api');
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         const Spacer(),
-        Container(
-          decoration: dropDecoration(),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          child: FutureBuilder<List<NameType>>(
-            future: _items,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                disposehttp;
-                return DropdownButton<NameType>(
-                  hint: const Text('diary',
-                      style: TextStyle(color: Colors.white)),
-                  value: _selectDescription,
-                  onChanged: selectDescription,
-                  items: snapshot.data!.map(dropDisplay).toList(),
-                  underline: Container(), // Remove the default underline
-                  icon: const Icon(Icons.arrow_drop_down,
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                  dropdownColor: const Color(0xFFDDA15E),
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+        dropDown(
+          'Diary',
+          _selectDescription,
+          selectDescription,
         ),
         const Spacer(),
-        Container(
-          decoration: dropDecoration(),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          child: FutureBuilder<List<NameType>>(
-            future: _items,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                disposehttp;
-                return DropdownButton<NameType>(
-                  hint:
-                      const Text('date', style: TextStyle(color: Colors.white)),
-                  value: _selectDate,
-                  onChanged: selectDate,
-                  items: snapshot.data!.map(dropDisplay).toList(),
-                  underline: Container(), // Remove the default underline
-                  icon: const Icon(Icons.arrow_drop_down,
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                  dropdownColor: const Color(0xFFDDA15E),
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+        dropDown(
+          'Date',
+          _selectDate,
+          selectDate,
         ),
         const Spacer(),
       ],

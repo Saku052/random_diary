@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SettingsTextfield extends StatelessWidget {
-  SettingsTextfield(this.setApi, this.input1, this.input2, {super.key});
-  final void Function(String, String) setApi;
-
+  SettingsTextfield(this.setApi, this.setDes, this.input1, this.input2,
+      {super.key});
+  final void Function(String) setApi;
+  final void Function(String) setDes;
   final String input1;
   final String input2;
 
@@ -27,22 +28,19 @@ class SettingsTextfield extends StatelessWidget {
           TextField(
             controller: apiController,
             decoration: fieldDecoration(input1),
+            onSubmitted: (value) {
+              setApi(value);
+            },
           ),
           const SizedBox(height: 15),
           TextField(
             controller: desController,
             decoration: fieldDecoration(input2),
+            onSubmitted: (value) {
+              setDes(value);
+            },
           ),
           const SizedBox(height: 30),
-          OutlinedButton.icon(
-            onPressed: () => setApi(apiController.text, desController.text),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFFFEFAE0),
-              backgroundColor: const Color(0xFF606C38),
-            ),
-            icon: const Icon(Icons.save),
-            label: const Text('Save'),
-          ),
         ],
       ),
     );

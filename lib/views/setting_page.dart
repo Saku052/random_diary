@@ -20,11 +20,22 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  void saveapi(String api, String des) {
+  String _currentApi = '';
+  String _currentDes = '';
+
+  void saveapi(String api) {
     setState(() {
       const FlutterSecureStorage storage = FlutterSecureStorage();
       storage.write(key: 'api', value: api);
+      _currentApi = api;
+    });
+  }
+
+  void saveDes(String des) {
+    setState(() {
+      const FlutterSecureStorage storage = FlutterSecureStorage();
       storage.write(key: 'des', value: des);
+      _currentDes = des;
     });
   }
 
@@ -49,8 +60,12 @@ class _SettingPageState extends State<SettingPage> {
     return Column(
       children: <Widget>[
         SettingsBanner(widget.changePage),
-        SettingsTextfield(saveapi, 'api', 'database ID'),
-        PropertiesDropdown(saveDate, saveDescription),
+        SettingsTextfield(saveapi, saveDes, 'api', 'database ID'),
+        PropertiesDropdown(
+          saveDate,
+          saveDescription,
+          key: ValueKey('$_currentApi-$_currentDes'),
+        ),
       ],
     );
   }
