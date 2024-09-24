@@ -6,7 +6,7 @@ import 'package:random_diary/models/diary_model.dart';
 import 'package:random_diary/models/exception_model.dart';
 
 class SendDiary {
-  final String _baseUrl = 'https://api.notion.com/v1/';
+  final String _baseUrl = 'https://api.notion.com/v1/pages';
   final http.Client _client = http.Client();
 
   Future<void> sendDiaryToNotion(Diary diary) async {
@@ -27,7 +27,7 @@ class SendDiary {
         throw DatePropNotFoundException('Date property not found');
       }
 
-      final url = '${_baseUrl}pages';
+      final url = _baseUrl;
       final response = await _client.post(
         Uri.parse(url),
         headers: {
@@ -36,21 +36,19 @@ class SendDiary {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'parent': {'database_id': databaseId},
-          'properties': {
+          "parent": {"database_id": databaseId},
+          "properties": {
             descriptionProp: {
-              'rich_text': [
+              "rich_text": [
                 {
-                  'text': {'content': diary.description}
+                  "text": {"content": diary.description}
                 }
               ]
             },
             dateProp: {
-              'date': {
-                'start': diary.date.toIso8601String(),
-              }
-            },
-          },
+              "date": {"start": diary.date.toIso8601String()}
+            }
+          }
         }),
       );
 

@@ -3,6 +3,7 @@ import 'package:random_diary/widgets/top_banner.dart';
 import 'package:random_diary/widgets/text_box.dart';
 import 'package:random_diary/models/request_diary.dart';
 import 'package:random_diary/models/diary_model.dart';
+import 'package:random_diary/models/send_diary.dart';
 import 'dart:math';
 
 class DiaryPage extends StatefulWidget {
@@ -16,6 +17,8 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   late Future<List<Diary>> _items;
   final RequestDiary requestDiary = RequestDiary();
+  final SendDiary sendDiary = SendDiary();
+
   int listNum = 0;
 
   int getNum(int? listLength) {
@@ -75,6 +78,11 @@ class _DiaryPageState extends State<DiaryPage> {
         GestureDetector(
           onTap: reload,
           child: const Icon(Icons.redo, color: textColor, size: 100),
+        ),
+        GestureDetector(
+          onTap: () => sendDiary.sendDiaryToNotion(
+              Diary(date: DateTime.now(), description: 'test')),
+          child: const Icon(Icons.send, color: textColor, size: 100),
         ),
       ],
     );
